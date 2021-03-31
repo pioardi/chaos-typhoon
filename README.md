@@ -23,8 +23,9 @@ Experiments list:
 
 This repo is open to new contributions.  
 Please share failure scenarios that you met:
-    - Specify a draft infrastructure that was affected by the failure ( with a Diagram, plantuml should be the best option )
-    - Clearly describe the failure scenario
-    - Clearly describe how to handle the failure scenario to minimize/avoid impact on the system
-    - Implement the solution to handle the failure and automate the deployment
-    - Design and automate a chaos experiment to test the solution ( with chaostoolkit or others if needed )
+
+- Specify a draft infrastructure that was affected by the failure ( with a Diagram, plantuml should be the best option )
+- Clearly describe the failure scenario
+- Clearly describe how to handle the failure scenario to minimize/avoid impact on the system
+- Implement the solution to handle the failure and automate the deployment
+- Design and automate a chaos experiment to test the solution ( with chaostoolkit or others if needed )
