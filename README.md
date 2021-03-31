@@ -12,4 +12,19 @@ Goals of this project:
 
 ## Real-worl scenarios
 
-Please look at the experiments folder to find or suggest a real-world scenario.
+Experiments list:
+
+| Number      | Environment     | Description                                                                                           |
+| ----------- | -----------     | -----------                                                                                           |
+| 001         | Cloud ( Azure ) | An app service or function app in the primary region has an outage                                    |
+| 002         | Cloud ( Azure ) | An application uses the claim check pattern with a blob storage, the blob storage is not available    |
+
+## Contribute
+
+This repo is open to new contributions.  
+Please share failure scenarios that you met:
+    - Specify a draft infrastructure that was affected by the failure ( with a Diagram, plantuml should be the best option )
+    - Clearly describe the failure scenario
+    - Clearly describe how to handle the failure scenario to minimize/avoid impact on the system
+    - Implement the solution to handle the failure and automate the deployment
+    - Design and automate a chaos experiment to test the solution ( with chaostoolkit or others if needed )
