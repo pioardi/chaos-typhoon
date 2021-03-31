@@ -13,4 +13,4 @@ This project leverages on chaos tools, the following are the goals of this proje
 
 ## Real-worl scenarios
 
-Please look here to find or suggest a real-world scenario.
+Please look at the experiments folder to find or suggest a real-world scenario.
