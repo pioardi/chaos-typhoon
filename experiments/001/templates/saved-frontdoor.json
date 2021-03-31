@@ -1,0 +1,129 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "frontdoors_supplychain_fa_02_name": {
+            "defaultValue": "supplychain-fa-02",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/frontdoors",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('frontdoors_supplychain_fa_02_name')]",
+            "location": "Global",
+            "properties": {
+                "resourceState": "Enabled",
+                "backendPools": [
+                    {
+                        "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/BackendPools/backendPool1')]",
+                        "name": "backendPool1",
+                        "properties": {
+                            "backends": [
+                                {
+                                    "address": "supplychain-fa-01.azurewebsites.net",
+                                    "httpPort": 80,
+                                    "httpsPort": 443,
+                                    "priority": 1,
+                                    "weight": 50,
+                                    "backendHostHeader": "supplychain-fa-01.azurewebsites.net",
+                                    "enabledState": "Enabled"
+                                },
+                                {
+                                    "address": "[concat(parameters('frontdoors_supplychain_fa_02_name'), '.azurewebsites.net')]",
+                                    "httpPort": 80,
+                                    "httpsPort": 443,
+                                    "priority": 2,
+                                    "weight": 50,
+                                    "backendHostHeader": "[concat(parameters('frontdoors_supplychain_fa_02_name'), '.azurewebsites.net')]",
+                                    "enabledState": "Enabled"
+                                }
+                            ],
+                            "healthProbeSettings": {
+                                "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/HealthProbeSettings/healthProbeSettings1')]"
+                            },
+                            "loadBalancingSettings": {
+                                "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/LoadBalancingSettings/loadBalancingSettings1')]"
+                            },
+                            "resourceState": "Enabled"
+                        }
+                    }
+                ],
+                "healthProbeSettings": [
+                    {
+                        "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/HealthProbeSettings/healthProbeSettings1')]",
+                        "name": "healthProbeSettings1",
+                        "properties": {
+                            "intervalInSeconds": 30,
+                            "path": "/api/Health",
+                            "protocol": "Https",
+                            "resourceState": "Enabled",
+                            "enabledState": "Enabled",
+                            "healthProbeMethod": "Get"
+                        }
+                    }
+                ],
+                "frontendEndpoints": [
+                    {
+                        "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/FrontendEndpoints/frontendEndpoint1')]",
+                        "name": "frontendEndpoint1",
+                        "properties": {
+                            "hostName": "[concat(parameters('frontdoors_supplychain_fa_02_name'), '.azurefd.net')]",
+                            "sessionAffinityEnabledState": "Disabled",
+                            "sessionAffinityTtlSeconds": 0,
+                            "resourceState": "Enabled"
+                        }
+                    }
+                ],
+                "loadBalancingSettings": [
+                    {
+                        "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/LoadBalancingSettings/loadBalancingSettings1')]",
+                        "name": "loadBalancingSettings1",
+                        "properties": {
+                            "additionalLatencyMilliseconds": 0,
+                            "sampleSize": 4,
+                            "successfulSamplesRequired": 1,
+                            "resourceState": "Enabled"
+                        }
+                    }
+                ],
+                "routingRules": [
+                    {
+                        "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/RoutingRules/routingRule1')]",
+                        "name": "routingRule1",
+                        "properties": {
+                            "frontendEndpoints": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/FrontendEndpoints/frontendEndpoint1')]"
+                                }
+                            ],
+                            "acceptedProtocols": [
+                                "Http",
+                                "Https"
+                            ],
+                            "patternsToMatch": [
+                                "/*"
+                            ],
+                            "enabledState": "Enabled",
+                            "resourceState": "Enabled",
+                            "routeConfiguration": {
+                                "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration",
+                                "forwardingProtocol": "MatchRequest",
+                                "backendPool": {
+                                    "id": "[concat(resourceId('Microsoft.Network/frontdoors', parameters('frontdoors_supplychain_fa_02_name')), '/backendPools/backendPool1')]"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "backendPoolsSettings": {
+                    "enforceCertificateNameCheck": "Disabled",
+                    "sendRecvTimeoutSeconds": 30
+                },
+                "enabledState": "Enabled"
+            }
+        }
+    ]
+}

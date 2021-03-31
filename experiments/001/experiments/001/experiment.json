@@ -1,0 +1,92 @@
+{
+  "name": "chaos-experient-001",
+  "version": "1.0.0",
+  "title": "What is the impact on our application chain when Region A's Function App Service goes offline?",
+  "description": "N/A",
+  "type": "action",
+
+  "contributions": {  
+      "availability" : "high",
+      "reliability": "high",
+      "security": "none",
+      "scalability": "none"
+  },
+
+  "configuration": {
+    "url": {
+      "type": "env",
+      "key": "URL",
+      "default": "https://consumptiontest.azurewebsites.net"
+    },
+    "primaryAppId": {
+      "type": "env",
+      "key": "PRIMARY_APP_ID",
+      "default": "91ee8b44-1428-4bab-815d-aa0a67118347"
+    },
+    "secondaryAppId": {
+      "type": "env",
+      "key": "SECONDARY_APP_ID",
+      "default": "91ee8b44-1428-4bab-815d-aa0a67118347"
+    },
+    "functionAppName": {
+      "type": "env",
+      "key": "FUNCTION_APP_NAME",
+      "default": "consumptiontest"
+    },
+    "resourceGroupName": {
+      "type": "env",
+      "key": "RG_NAME",
+      "default": "apatest"
+    },
+    "subscriptionId": {
+      "type": "env",
+      "key": "SUBSCRIPTION_ID",
+      "default": "a795f857-a0db-47ba-9f79-bcbe95e680dd"
+    }                   
+  },
+
+
+  "steady-state-hypothesis": {
+    "title": "The system is able to process orders",
+    "probes": [
+      {
+        "type": "probe",
+        "name": "all-orders-are-processed",
+        "tolerance": true,
+        "provider": {
+          "type": "python",
+          "module": "extension",
+          "func": "steady"
+        }
+      }
+    ]
+  },
+
+  "method": [
+    {
+      "name": "stop-function",
+      "type": "action",
+      "provider": {
+        "type": "python",
+        "module": "extension",
+        "func": "stop_function",
+        "arguments": {
+          "temperature": 80
+        }
+      }
+    }
+  ],
+
+  "rollbacks": [
+    {
+      "name": "start-function",
+      "type": "action",
+      "provider": {
+        "type": "python",
+        "module": "extension",
+        "func": "start_function"
+      }
+    }
+  ]
+
+}

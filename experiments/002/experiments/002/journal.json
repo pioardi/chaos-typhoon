@@ -1,0 +1,184 @@
+{
+  "chaoslib-version": "1.19.0",
+  "platform": "macOS-11.2.3-x86_64-i386-64bit",
+  "node": "MBPdiAlessandro.station",
+  "experiment": {
+    "name": "chaos-experient-001",
+    "version": "1.0.0",
+    "title": "What is the impact on our application chain when Region A's Function App Service goes offline?",
+    "description": "N/A",
+    "type": "action",
+    "contributions": {
+      "availability": "high",
+      "reliability": "high",
+      "security": "none",
+      "scalability": "none"
+    },
+    "configuration": {
+      "url": {
+        "type": "env",
+        "key": "URL",
+        "default": "https://consumptiontest.azurewebsites.net"
+      },
+      "primaryAppId": {
+        "type": "env",
+        "key": "PRIMARY_APP_ID",
+        "default": "91ee8b44-1428-4bab-815d-aa0a67118347"
+      },
+      "secondaryAppId": {
+        "type": "env",
+        "key": "SECONDARY_APP_ID",
+        "default": "91ee8b44-1428-4bab-815d-aa0a67118347"
+      },
+      "functionAppName": {
+        "type": "env",
+        "key": "FUNCTION_APP_NAME",
+        "default": "consumptiontest"
+      },
+      "resourceGroupName": {
+        "type": "env",
+        "key": "RG_NAME",
+        "default": "apatest"
+      },
+      "subscriptionId": {
+        "type": "env",
+        "key": "SUBSCRIPTION_ID",
+        "default": "a795f857-a0db-47ba-9f79-bcbe95e680dd"
+      }
+    },
+    "steady-state-hypothesis": {
+      "title": "The system is able to process orders",
+      "probes": [
+        {
+          "type": "probe",
+          "name": "all-orders-are-processed",
+          "tolerance": true,
+          "provider": {
+            "type": "python",
+            "module": "extension",
+            "func": "steady"
+          }
+        }
+      ]
+    },
+    "method": [
+      {
+        "name": "stop-function",
+        "type": "action",
+        "provider": {
+          "type": "python",
+          "module": "extension",
+          "func": "stop_function",
+          "arguments": {
+            "temperature": 80
+          }
+        }
+      }
+    ],
+    "rollbacks": [
+      {
+        "name": "start-function",
+        "type": "action",
+        "provider": {
+          "type": "python",
+          "module": "extension",
+          "func": "start_function"
+        }
+      }
+    ],
+    "dry": false
+  },
+  "start": "2021-03-31T10:53:48.048300",
+  "status": "completed",
+  "deviated": false,
+  "steady_states": {
+    "before": {
+      "steady_state_met": true,
+      "probes": [
+        {
+          "activity": {
+            "type": "probe",
+            "name": "all-orders-are-processed",
+            "tolerance": true,
+            "provider": {
+              "type": "python",
+              "module": "extension",
+              "func": "steady"
+            }
+          },
+          "output": true,
+          "status": "succeeded",
+          "start": "2021-03-31T10:53:48.050091",
+          "end": "2021-03-31T11:06:33.044269",
+          "duration": 764.994178,
+          "tolerance_met": true
+        }
+      ]
+    },
+    "after": {
+      "steady_state_met": true,
+      "probes": [
+        {
+          "activity": {
+            "type": "probe",
+            "name": "all-orders-are-processed",
+            "tolerance": true,
+            "provider": {
+              "type": "python",
+              "module": "extension",
+              "func": "steady"
+            }
+          },
+          "output": true,
+          "status": "succeeded",
+          "start": "2021-03-31T11:06:41.046233",
+          "end": "2021-03-31T11:19:05.699591",
+          "duration": 744.653358,
+          "tolerance_met": true
+        }
+      ]
+    },
+    "during": []
+  },
+  "run": [
+    {
+      "activity": {
+        "name": "stop-function",
+        "type": "action",
+        "provider": {
+          "type": "python",
+          "module": "extension",
+          "func": "stop_function",
+          "arguments": {
+            "temperature": 80
+          }
+        }
+      },
+      "output": null,
+      "status": "succeeded",
+      "start": "2021-03-31T11:06:33.046378",
+      "end": "2021-03-31T11:06:41.045241",
+      "duration": 7.998863
+    }
+  ],
+  "rollbacks": [
+    {
+      "activity": {
+        "name": "start-function",
+        "type": "action",
+        "provider": {
+          "type": "python",
+          "module": "extension",
+          "func": "start_function"
+        }
+      },
+      "output": null,
+      "status": "succeeded",
+      "start": "2021-03-31T11:19:05.700977",
+      "end": "2021-03-31T11:19:14.299158",
+      "duration": 8.598181
+    }
+  ],
+  "end": "2021-03-31T11:19:14.299462",
+  "duration": 1526.270289182663
+}
