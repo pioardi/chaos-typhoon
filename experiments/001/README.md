@@ -1,6 +1,6 @@
 # Chaos experiments
 
-This repo contains some fully automated chaos experiments to demonstrate the power of Chaos Engineering practice and apply it at cloud infrastructure level.
+This folder contains a fully automated chaos experiment to demonstrate the power of Chaos Engineering practice and apply it at cloud infrastructure level.
 
 Chaos experiments will be applied on the architecture below :
 
@@ -17,18 +17,11 @@ Assuming that the reference event-driven system is a supply chain, the system is
 This is obviously a simplified view of a supply chain, just to demonstrate the power of Chaos Engineering practices and how to start implementing them.  
 The steady state will be checked through custom Azure application insights business metrics.
 
-## Experiment number 1
+## Experiment Description
 
 In this first experiment consists on simulate Azure Function Apps failure on the primary region.  
 An entry level experiment that helps to define the steady state and understand how to check the steady state.  
 This experiment should work thanks to Azure Front Door that switch the traffic to the secondary region.  
-
-## Experiment number 2
-
-In this first experiment consists on simulate Azure Storage Account failure on the primary region.  
-As clear into the high level architecture our system use claim check pattern massively, so if storage account does not work and the system is not reactive, failures will start really soon.
-To handle this scenario the system use a circuit breaker pattern that temporarily use cosmos db instead of storage account to store blob data.  
-The function that consume the event will first check if blob data are present on the storage account, if not then will retry to look on the cosmos account.  
 
 ## How to execute the chaos experiments
 
