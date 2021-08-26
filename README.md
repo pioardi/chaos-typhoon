@@ -1,4 +1,4 @@
-# azure-chaos-typhoon :cyclone: :ocean: :zap: :cloud:
+# chaos-typhoon :cyclone: :ocean: :zap: :cloud:
 
 **Typoohn** is a collection of **chaos experiments** built with [chaostoolkit](https://github.com/chaostoolkit/chaostoolkit) that can be used in several ways based on the maturity level of your system.  
 Goals of this project:
