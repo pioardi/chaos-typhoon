@@ -59,6 +59,7 @@ $primaryMetrics = Invoke-RestMethod -Method POST -Uri $primaryAppInsightsUri -Bo
 $secondaryMetrics = Invoke-RestMethod -Method POST -Uri $secondaryAppInsightsUri -Body ( $body | ConvertTo-Json ) -Headers $headers
 $numberOfOrdersReceived = 0
 $numberOfOrdersProcessed = 0
+# TODO Use the time to repair to decide if the experiment is successful or not
 if($primaryMetrics.tables.rows){
     $numberOfOrdersReceived = $primaryMetrics.tables.rows[0][1]
     $numberOfOrdersProcessed = $primaryMetrics.tables.rows[1][1]
